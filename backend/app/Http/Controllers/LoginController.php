@@ -19,9 +19,7 @@ class LoginController extends Controller
             'phone_number' => 'required|numeric|min:10'
         ]);
 
-        $user = User::firstOrCreate([
-            'phone_number' => $request->phone_number
-        ]);
+        $user = User::firstOrCreate($request->only('phone_number'));
 
         if (!$user){
             return response()->json([
