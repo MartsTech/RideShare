@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TripController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/driver', [DriverController::class, 'get']);
     Route::post('/driver', [DriverController::class, 'update']);
+
+    Route::get('/trip/{trip}', [TripController::class, 'get']);
+    Route::post('/trip', [TripController::class, 'create']);
 });
