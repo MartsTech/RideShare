@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class DriverController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function get(Request $request): JsonResponse
     {
         $user = $request->user();
@@ -17,6 +21,10 @@ class DriverController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function update(Request $request): JsonResponse
     {
         $request->validate([

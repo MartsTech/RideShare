@@ -22,7 +22,9 @@ Route::post('/login/verify', [LoginController::class, 'verify']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return response()->json([
+            'user' => $request->user()
+        ]);
     });
 
     Route::get('/driver', [DriverController::class, 'get']);
@@ -30,4 +32,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/trip/{trip}', [TripController::class, 'get']);
     Route::post('/trip', [TripController::class, 'create']);
+    Route::post('/trip/{trip}/accept', [TripController::class, 'accept']);
+    Route::post('/trip/{trip}/start', [TripController::class, 'start']);
+    Route::post('/trip/{trip}/end', [TripController::class, 'end']);
+    Route::post('/trip/{trip}/locate', [TripController::class, 'locate']);
+
 });

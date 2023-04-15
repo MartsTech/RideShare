@@ -20,6 +20,19 @@ class Trip extends Model
     /**
      * The attributes that should be cast.
      *
+     * @var array<int, string>
+     */
+    protected $casts = [
+        'origin' => 'array',
+        'destination' => 'array',
+        'driver_location' => 'array',
+        'is_started' => 'boolean',
+        'is_completed' => 'boolean'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
      * @return BelongsTo
      */
     public function user(): BelongsTo
