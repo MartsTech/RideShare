@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Driver extends Model
 {
@@ -19,18 +21,19 @@ class Driver extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return BelongsTo
      */
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return HasMany
      */
-    public function trips(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function trips(): HasMany
     {
         return $this->hasMany(Trip::class);
     }
