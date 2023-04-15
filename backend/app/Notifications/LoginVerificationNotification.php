@@ -33,6 +33,6 @@ class LoginVerificationNotification extends Notification
         ]);
 
         return (new TwilioSmsMessage())
-                    ->content("Your authentication code is: {$authCode}");
+                    ->content($authCode);
     }
 }
