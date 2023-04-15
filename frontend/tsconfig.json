@@ -4,10 +4,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@app/*": ["./src/app/*"]
     }
   },
-
   "references": [
     {
       "path": "./tsconfig.node.json"
