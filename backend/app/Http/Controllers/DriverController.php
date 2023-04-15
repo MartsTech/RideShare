@@ -13,11 +13,11 @@ class DriverController extends Controller
      */
     public function get(Request $request): JsonResponse
     {
-        $user = $request->user();
-        $user->load('driver');
+        $driver = $request->user()->driver;
+        $driver->load('user');
 
         return response()->json([
-            'user' => $user
+            'driver' => $driver
         ]);
     }
 
@@ -40,7 +40,9 @@ class DriverController extends Controller
 
         $user->update($request->only('name'));
 
-        $user->driver()->updateOrCreate($request->only([
+        $driver = $user->driver;
+
+        $driver->updateOrCreate($request->only([
             'year',
             'make',
             'model',
@@ -48,10 +50,10 @@ class DriverController extends Controller
             'license_plate'
         ]));
 
-        $user->load('driver');
+        $driver->load('user');
 
         return response()->json([
-            'user' => $user
+            'driver' => $driver
         ]);
     }
 }
