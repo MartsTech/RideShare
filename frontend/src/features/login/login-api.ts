@@ -1,5 +1,6 @@
 import api from '@app/api'
 import { reqStateFailure, reqStateLoading, reqStateSuccess } from '@common/utils/request'
+import { useAuthStore } from '@features/auth/auth-store'
 import { useLoginStore } from './login-store'
 import type {
   LoginSubmitRequest,
@@ -25,6 +26,7 @@ export default {
   },
   verify: async (request: LoginVerifyRequest) => {
     const loginStore = useLoginStore()
+    const authStore = useAuthStore()
 
     loginStore.verifyStateChanged(reqStateLoading())
 
@@ -32,8 +34,9 @@ export default {
       .post<LoginVerifyResponse>('/login/verify', request)
       .then((response) => {
         loginStore.verifyStateChanged(reqStateSuccess(response.data))
+        authStore.accessTokenSaved(response.data.access_token)
       })
-      .then(() => {
+      .catch(() => {
         loginStore.verifyStateChanged(reqStateFailure(new Error('Unexpected error')))
       })
   }

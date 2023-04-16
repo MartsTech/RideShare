@@ -19,13 +19,13 @@ class LoginController extends Controller
             'phone_number' => 'required|numeric|min:10'
         ]);
 
-        $user = User::class->firstOrCreate($request->only('phone_number'));
+        $user = User::firstOrCreate($request->only('phone_number'));
 
         if (!$user)
         {
             return response()->json([
-                'message' => 'Could not authenticate user'
-            ], 401);
+                'message' => 'Could not create user'
+            ], 500);
         }
 
         $user->notify(new LoginVerificationNotification());
@@ -46,15 +46,14 @@ class LoginController extends Controller
             'auth_code' => 'required|numeric|between:111111,999999'
         ]);
 
-        $user = User::class
-            ->where('phone_number', $request->input('phone_number'))
+        $user = User::where('phone_number', $request->input('phone_number'))
             ->where('auth_code', $request->input('auth_code'))
             ->first();
 
         if (!$user)
         {
             return response()->json([
-                'message' => 'Could not authenticate user'
+                'message' => 'Could not verify user'
             ], 401);
         }
 
