@@ -17,13 +17,16 @@ const placeChangeHandler = (model: DestinationEvent) => {
     name: model.name,
     address: model.formatted_address,
     geometry: {
-      lat: model.geometry.location.lat.toString(),
-      long: model.geometry.location.lng.toString()
+      lat: model.geometry.location.lat(),
+      lng: model.geometry.location.lng()
     }
   })
 }
 
 const findRideHandler = () => {
+  if (findRideDisabled.value) {
+    return
+  }
   router.push('/map')
 }
 </script>

@@ -2,8 +2,8 @@ export interface DestinationModel {
   name: string
   address: string
   geometry: {
-    lat: string
-    long: string
+    lat: number
+    lng: number
   }
 }
 
@@ -73,8 +73,8 @@ export interface Geometry {
 }
 
 export interface Location {
-  lat: number
-  lng: number
+  lat: () => number
+  lng: () => number
 }
 
 export interface Viewport {
