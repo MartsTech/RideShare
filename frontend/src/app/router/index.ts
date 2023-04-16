@@ -2,6 +2,7 @@ import { useAuthStore } from '@features/auth/auth-store'
 import DestinationView from '@features/destination/DestinationView.vue'
 import HomeView from '@features/home/HomeView.vue'
 import LoginView from '@features/login/LoginView.vue'
+import MapView from '@features/map/MapView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/destination',
       name: 'Destination',
       component: DestinationView
+    },
+    {
+      path: '/map',
+      name: 'Map',
+      component: MapView
     }
   ]
 })

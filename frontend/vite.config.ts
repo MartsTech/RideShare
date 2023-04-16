@@ -11,5 +11,9 @@ export default defineConfig({
       '@common': fileURLToPath(new URL('./src/common', import.meta.url)),
       '@features': fileURLToPath(new URL('./src/features', import.meta.url))
     }
+  },
+  optimizeDeps: {
+    // fast-deep-equal doesnt have default export
+    include: ['fast-deep-equal']
   }
 })
