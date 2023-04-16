@@ -12,7 +12,22 @@ export interface DriverModel {
   updated_at: string
   user: UserModel
 }
+
 // ================== Get =====================
 export interface DriverGetResponse {
+  driver: DriverModel
+}
+
+// ================== Update =====================
+export interface DriverUpdateRequest {
+  name: string
+  year: number
+  make: string
+  model: string
+  color: string
+  license_plate: string
+}
+
+export interface DriverUpdateResponse {
   driver: DriverModel
 }
