@@ -5,6 +5,7 @@ import HomeView from '@features/home/HomeView.vue'
 import LoginView from '@features/login/LoginView.vue'
 import MapView from '@features/map/MapView.vue'
 import TripView from '@features/trip/TripView.vue'
+import { useTripStore } from '@features/trip/trip-store'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -39,8 +40,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
-  const destinationStore = useDestinationStore()
-
   const authStore = useAuthStore()
 
   if (authStore.accessToken) {
@@ -48,7 +47,16 @@ router.beforeEach((to, _from, next) => {
       return next('/')
     }
     if (to.path === '/map') {
+      const destinationStore = useDestinationStore()
+
       if (!destinationStore.destination) {
+        return next('/')
+      }
+    }
+    if (to.path === '/trip') {
+      const tripStore = useTripStore()
+
+      if (!tripStore.trip) {
         return next('/')
       }
     }

@@ -1,6 +1,7 @@
 <!-- eslint-disable no-undef -->
 <script setup lang="ts">
 import { useDestinationStore } from '@features/destination/destination-store'
+import tripApi from '@features/trip/trip-api'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
@@ -45,7 +46,25 @@ onMounted(() => {
 })
 
 const continueHandler = () => {
-  router.push('/trip')
+  if (!destinationStore.destination || !mapStore.location) {
+    return
+  }
+
+  tripApi
+    .create({
+      destination_name: destinationStore.destination?.name,
+      destination: {
+        lat: destinationStore.destination?.geometry.lat.toString(),
+        lng: destinationStore.destination?.geometry.lng.toString()
+      },
+      origin: {
+        lat: mapStore.location.lat.toString(),
+        lng: mapStore.location.lng.toString()
+      }
+    })
+    .then(() => {
+      router.push('/trip')
+    })
 }
 </script>
 
