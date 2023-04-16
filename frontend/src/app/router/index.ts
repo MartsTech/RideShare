@@ -1,4 +1,5 @@
 import { useAuthStore } from '@features/auth/auth-store'
+import DestinationView from '@features/destination/DestinationView.vue'
 import HomeView from '@features/home/HomeView.vue'
 import LoginView from '@features/login/LoginView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -7,14 +8,19 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/login',
+      name: 'Login',
+      component: LoginView
+    },
+    {
       path: '/',
       name: 'Home',
       component: HomeView
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: LoginView
+      path: '/destination',
+      name: 'Destination',
+      component: DestinationView
     }
   ]
 })
