@@ -14,7 +14,10 @@ class DriverController extends Controller
     public function get(Request $request): JsonResponse
     {
         $driver = $request->user()->driver;
-        $driver->load('user');
+        
+        if ($driver){
+            $driver->load('user');
+        }
 
         return response()->json([
             'driver' => $driver

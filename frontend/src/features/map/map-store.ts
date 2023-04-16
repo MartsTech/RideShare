@@ -1,7 +1,6 @@
 import { StorageSerializers, useStorage, type RemovableRef } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { useToast } from 'vue-toastification'
 import type { MapLocationModel } from './map-types'
 
 export const useMapStore = defineStore('map', () => {
@@ -11,22 +10,9 @@ export const useMapStore = defineStore('map', () => {
     })
   )
 
-  const getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          location.value = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }
-        },
-        (error) => {
-          const toast = useToast()
-          toast.error(error.message)
-        }
-      )
-    }
+  const locationChanged = (model: MapLocationModel) => {
+    location.value = model
   }
 
-  return { location, getLocation }
+  return { location, locationChanged }
 })

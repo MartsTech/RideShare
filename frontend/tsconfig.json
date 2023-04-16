@@ -7,7 +7,8 @@
       "@app/*": ["./src/app/*"],
       "@common/*": ["./src/common/*"],
       "@features/*": ["./src/features/*"]
-    }
+    },
+    "ignoreDeprecations": "5.0"
   },
   "references": [
     {

@@ -5,3 +5,8 @@ export interface UserModel {
   created_at: string
   updated_at: string
 }
+
+// ================== Get =====================
+export interface UserGetResponse {
+  user: UserModel
+}

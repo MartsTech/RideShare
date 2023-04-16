@@ -15,34 +15,48 @@ const router = useRouter()
 const map = ref<any | null>(null)
 
 onMounted(() => {
-  mapStore.getLocation()
-
-  map.value?.$mapPromise.then((mapObject: any) => {
-    let currentPoint = new google.maps.LatLng(mapStore.location)
-    let destinationPoint = new google.maps.LatLng(destinationStore.destination?.geometry)
-    let directionsService = new google.maps.DirectionsService()
-    let directionsDisplay = new google.maps.DirectionsRenderer({
-      map: mapObject
-    })
-
-    directionsService.route(
-      {
-        origin: currentPoint,
-        destination: destinationPoint,
-        avoidTolls: false,
-        avoidHighways: false,
-        travelMode: google.maps.TravelMode.DRIVING
-      },
-      (result: any, status: any) => {
-        if (status === google.maps.DirectionsStatus.OK) {
-          directionsDisplay.setDirections(result)
-        } else {
-          const toast = useToast()
-          toast.error('Could not calculate directions')
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
         }
+        mapStore.locationChanged(location)
+
+        map.value?.$mapPromise.then((mapObject: any) => {
+          let currentPoint = new google.maps.LatLng(location)
+          let destinationPoint = new google.maps.LatLng(destinationStore.destination?.geometry)
+          let directionsService = new google.maps.DirectionsService()
+          let directionsDisplay = new google.maps.DirectionsRenderer({
+            map: mapObject
+          })
+
+          directionsService.route(
+            {
+              origin: currentPoint,
+              destination: destinationPoint,
+              avoidTolls: false,
+              avoidHighways: false,
+              travelMode: google.maps.TravelMode.DRIVING
+            },
+            (result: any, status: any) => {
+              if (status === google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(result)
+              } else {
+                const toast = useToast()
+                toast.error('Could not calculate directions')
+              }
+            }
+          )
+        })
+      },
+      (error) => {
+        const toast = useToast()
+        toast.error(error.message)
       }
     )
-  })
+  }
 })
 
 const continueHandler = () => {
