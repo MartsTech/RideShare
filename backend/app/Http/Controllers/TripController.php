@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TripAcceptedEvent;
-use App\Events\TripEndedEvent;
-use App\Events\TripLocatedEvent;
-use App\Events\TripStartedEvent;
+use App\Events\TripAccepted;
+use App\Events\TripCreated;
+use App\Events\TripEnded;
+use App\Events\TripLocated;
+use App\Events\TripStarted;
 use App\Models\Trip;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -51,6 +52,8 @@ class TripController extends Controller
 
         $trip->load('user', 'driver.user');
 
+        TripCreated::dispatch($trip);
+
         return response()->json([
             'trip' => $trip
         ]);
@@ -80,7 +83,7 @@ class TripController extends Controller
 
         $trip->load('user', 'driver.user');
 
-        TripAcceptedEvent::dispatch($trip, $trip->user);
+        TripAccepted::dispatch($trip, $trip->user);
 
         return response()->json([
             'trip' => $trip
@@ -106,7 +109,7 @@ class TripController extends Controller
 
         $trip->load('user', 'driver.user');
 
-        TripStartedEvent::dispatch($trip, $trip->user);
+        TripStarted::dispatch($trip, $trip->user);
 
         return response()->json([
             'trip' => $trip
@@ -143,7 +146,7 @@ class TripController extends Controller
 
         $trip->load('user', 'driver.user');
 
-        TripLocatedEvent::dispatch($trip, $trip->user);
+        TripLocated::dispatch($trip, $trip->user);
 
         return response()->json([
             'trip' => $trip
@@ -169,7 +172,7 @@ class TripController extends Controller
 
         $trip->load('user', 'driver.user');
 
-        TripEndedEvent::dispatch($trip, $trip->user);
+        TripEnded::dispatch($trip, $trip->user);
 
         return response()->json([
             'trip' => $trip

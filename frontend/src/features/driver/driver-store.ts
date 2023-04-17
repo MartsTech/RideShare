@@ -1,3 +1,4 @@
+import storage from '@app/storage'
 import { reqStateDefault, type RequestState } from '@common/utils/request'
 import { useUserStore } from '@features/user/user-store'
 import { StorageSerializers, useStorage, type RemovableRef } from '@vueuse/core'
@@ -7,7 +8,7 @@ import type { DriverGetResponse, DriverModel, DriverUpdateResponse } from './dri
 
 export const useDriverStore = defineStore('driver', () => {
   const driver = ref<RemovableRef<DriverModel | null>>(
-    useStorage('driver-current', null, localStorage, {
+    useStorage('driver-current', null, storage, {
       serializer: StorageSerializers.object
     })
   )

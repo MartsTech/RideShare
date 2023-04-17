@@ -1,7 +1,12 @@
 import api from '@app/api'
 import { reqStateFailure, reqStateLoading, reqStateSuccess } from '@common/utils/request'
 import { useTripStore } from './trip-store'
-import type { TripCreateRequest, TripCreateResponse } from './trip-types'
+import type {
+  TripAcceptRequest,
+  TripAcceptResponse,
+  TripCreateRequest,
+  TripCreateResponse
+} from './trip-types'
 
 export default {
   create: async (request: TripCreateRequest) => {
@@ -16,6 +21,20 @@ export default {
       })
       .catch(() => {
         tripStore.createReqStateChanged(reqStateFailure(new Error('Unexpected error')))
+      })
+  },
+  accept: async (request: TripAcceptRequest) => {
+    const tripStore = useTripStore()
+
+    tripStore.acceptReqStateChanged(reqStateLoading())
+
+    await api
+      .post<TripAcceptResponse>(`/trip/${request.trip_id}/accept`, request)
+      .then((response) => {
+        tripStore.acceptReqStateChanged(reqStateSuccess(response.data))
+      })
+      .catch(() => {
+        tripStore.acceptReqStateChanged(reqStateFailure(new Error('Unexpected error')))
       })
   }
 }

@@ -25,9 +25,6 @@ api.interceptors.response.use(
 
     switch (status) {
       case 401: {
-        const authStore = useAuthStore()
-        authStore.accessTokenRemoved()
-
         if (
           typeof data === 'object' &&
           data &&

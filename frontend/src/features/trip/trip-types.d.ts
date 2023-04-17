@@ -26,6 +26,10 @@ interface TripModel {
   driver?: DriverModel | null
 }
 
+export interface TripCreatedEvent {
+  trip: TripModel
+}
+
 // ================== Create =====================
 interface TripCreateRequest {
   destination_name: string
@@ -40,5 +44,18 @@ interface TripCreateRequest {
 }
 
 interface TripCreateResponse {
+  trip: TripModel
+}
+
+// ================== Accept =====================
+interface TripAcceptRequest {
+  trip_id: number
+  driver_location: {
+    lat: string
+    lng: string
+  }
+}
+
+interface TripAcceptResponse {
   trip: TripModel
 }

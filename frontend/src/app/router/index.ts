@@ -3,6 +3,8 @@ import DestinationView from '@features/destination/DestinationView.vue'
 import { useDestinationStore } from '@features/destination/destination-store'
 import DriverView from '@features/driver/DriverView.vue'
 import { useDriverStore } from '@features/driver/driver-store'
+import DrivingView from '@features/driving/DrivingView.vue'
+import { useDrivingStore } from '@features/driving/driving-store'
 import HomeView from '@features/home/HomeView.vue'
 import LoginView from '@features/login/LoginView.vue'
 import MapView from '@features/map/MapView.vue'
@@ -50,6 +52,11 @@ const router = createRouter({
       path: '/driver',
       name: 'Driver',
       component: DriverView
+    },
+    {
+      path: '/driving',
+      name: 'Driving',
+      component: DrivingView
     }
   ]
 })
@@ -95,6 +102,14 @@ router.beforeEach((to, _from, next) => {
 
     if (!driverStore.driver) {
       return next('/driver')
+    }
+  }
+
+  if (to.path === '/driving') {
+    const drivingStore = useDrivingStore()
+
+    if (!drivingStore.trip) {
+      return next('/standby')
     }
   }
 
