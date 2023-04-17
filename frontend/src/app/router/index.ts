@@ -77,6 +77,14 @@ router.beforeEach((to, _from, next) => {
     userApi.get()
   }
 
+  if (to.path !== '/driving') {
+    const drivingStore = useDrivingStore()
+
+    if (drivingStore.trip) {
+      return next('/driving')
+    }
+  }
+
   if (to.path === '/login') {
     return next('/')
   }

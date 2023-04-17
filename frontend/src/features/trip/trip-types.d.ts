@@ -59,3 +59,34 @@ interface TripAcceptRequest {
 interface TripAcceptResponse {
   trip: TripModel
 }
+
+// ================== Locate =====================
+interface TripLocateRequest {
+  trip_id: number
+  driver_location: {
+    lat: string
+    lng: string
+  }
+}
+
+interface TripLocateResponse {
+  trip: TripModel
+}
+
+// ================== Start =====================
+interface TripStartRequest {
+  trip_id: number
+}
+
+interface TripStartResponse {
+  trip: TripModel
+}
+
+// ================== End =====================
+interface TripEndRequest {
+  trip_id: number
+}
+
+interface TripEndResponse {
+  trip: TripModel
+}
