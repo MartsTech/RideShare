@@ -133,7 +133,7 @@ class TripController extends Controller
             ], 401);
         }
 
-        if (!$trip->is_started || $trip->is_completed)
+        if ($trip->is_completed)
         {
             return response()->json([
                 'message' => 'Unauthorized'

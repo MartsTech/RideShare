@@ -85,6 +85,14 @@ router.beforeEach((to, _from, next) => {
     }
   }
 
+  if (to.path !== '/trip') {
+    const tripStore = useTripStore()
+
+    if (tripStore.trip) {
+      return next('/trip')
+    }
+  }
+
   if (to.path === '/login') {
     return next('/')
   }

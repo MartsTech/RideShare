@@ -26,7 +26,24 @@ interface TripModel {
   driver?: DriverModel | null
 }
 
+// ================== Events =====================
 export interface TripCreatedEvent {
+  trip: TripModel
+}
+
+export interface TripAcceptedEvent {
+  trip: TripModel
+}
+
+export interface TripStartedEvent {
+  trip: TripModel
+}
+
+export interface TripLocatedEvent {
+  trip: TripModel
+}
+
+export interface TripEndedEvent {
   trip: TripModel
 }
 

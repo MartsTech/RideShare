@@ -30,12 +30,15 @@ export const useTripStore = defineStore('trip', () => {
 
   const endReqState = ref<RequestState<TripEndResponse>>(reqStateDefault())
 
+  const tripChanged = (state: TripModel | null) => {
+    trip.value = state
+  }
+
   const createReqStateChanged = (state: RequestState<TripCreateResponse>) => {
     createReqState.value = state
 
     if (state.isSuccess) {
-      const drivingStore = useDrivingStore()
-      drivingStore.tripChanged(state.data?.trip ?? null)
+      trip.value = state.data?.trip
     }
   }
 
@@ -82,6 +85,7 @@ export const useTripStore = defineStore('trip', () => {
     locateReqState,
     startReqState,
     endReqState,
+    tripChanged,
     createReqStateChanged,
     acceptReqStateChanged,
     locateReqStateChanged,

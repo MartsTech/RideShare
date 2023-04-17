@@ -1,9 +1,9 @@
 <!-- eslint-disable no-undef -->
 <script setup lang="tsx">
 import Loader from '@app/components/Loader.vue'
-import { driverTripCreatedListener } from '@features/driver/driver-listeners'
 import { useDrivingStore } from '@features/driving/driving-store'
 import tripApi from '@features/trip/trip-api'
+import { tripCreatedListener } from '@features/trip/trip-listeners'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
@@ -23,7 +23,7 @@ const title = computed(() => {
 onMounted(() => {
   routeHandler()
 
-  driverTripCreatedListener((e) => {
+  tripCreatedListener((e) => {
     standbyStore.tripChanged(e.trip)
   })
 })
